@@ -30,17 +30,19 @@ namespace TShockInterface
 
         public override Version Version { get { return Assembly.GetExecutingAssembly().GetName().Version; } }
 
+        public override void Initialize()
+        {
+            ServerApi.Hooks.GameInitialize.Register(this, OnInitialize);
+            Commands.ChatCommands.Add(new Command(OpenInterface, "interface"));
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
+                ServerApi.Hooks.GameInitialize.Deregister(this, OnInitialize);
             }
             base.Dispose(disposing);
-        }
-
-        public override void Initialize()
-        {
-            Commands.ChatCommands.Add(new Command(OpenInterface, "open"));
         }
 
         public TSInterface(Main game) : base(game)
@@ -61,6 +63,11 @@ namespace TShockInterface
             ShowWindow(handle, i);
         }
 
+        public void OnInitialize(EventArgs e)
+        {
+            LaunchInterface();
+        }
+
         public void OpenInterface(CommandArgs args)
         {
             if (!(args.Player  is TShockAPI.TSServerPlayer))
@@ -73,6 +80,11 @@ namespace TShockInterface
                 args.Player.SendErrorMessage("Window is already open!");
                 return;
             }
+            LaunchInterface();
+        }
+
+        public void LaunchInterface()
+        {
             Thread t = new Thread(() =>
             {
                 Window w = new Window();
