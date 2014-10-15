@@ -8,7 +8,11 @@ using System.Text;
 using System.Windows.Forms;
 using TerrariaApi;
 using TShockAPI;
+using TShockAPI.Hooks;
 using TerrariaApi.Server;
+using System.Threading;
+using System.IO.Streams;
+using System.IO;
 
 namespace TShockInterface
 {
@@ -31,39 +35,11 @@ namespace TShockInterface
                 {
                     Commands.HandleCommand(TSPlayer.Server, msg);
                 }
+                else if(msg.Equals("cls") || msg.Equals("clear"))
+                    richTextBox1.Clear();
                 else
-                {
                     TShock.Utils.Broadcast("(Server Broadcast) " + msg, Convert.ToByte(TShock.Config.BroadcastRGB[0]), Convert.ToByte(TShock.Config.BroadcastRGB[1]), Convert.ToByte(TShock.Config.BroadcastRGB[2]));
-                    richTextBox1.Append("(Server Broadcast) " + msg, Convert.ToByte(TShock.Config.BroadcastRGB[0]), Convert.ToByte(TShock.Config.BroadcastRGB[1]), Convert.ToByte(TShock.Config.BroadcastRGB[2]));
-                }
             }
-        }
-
-        public void OnChat(ServerChatEventArgs e)
-        {
-            TSPlayer tsplr = TShock.Players[e.Who];
-            if (tsplr.mute)
-                return;
-
-            var text = String.Format(TShock.Config.ChatFormat, tsplr.Group.Name, tsplr.Group.Prefix, tsplr.Name, tsplr.Group.Suffix, e.Text);
-            richTextBox1.Append(text, tsplr.Group.R, tsplr.Group.G, tsplr.Group.B);
-        }
-
-        public void OnGreetPlayer(GreetPlayerEventArgs e)
-        {
-            TSPlayer tsplr= TShock.Players[e.Who];
-            richTextBox1.Append(string.Format("{0} has joined. IP: {1}", tsplr.Name,tsplr.IP), System.Drawing.Color.Yellow);
-        }
-
-        public void OnLeave(LeaveEventArgs e)
-        {
-            TSPlayer tsplr = TShock.Players[e.Who];
-            richTextBox1.Append(tsplr.Name + " has left.", System.Drawing.Color.Yellow);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            TSInterface.ToggleConsoleState();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -86,6 +62,18 @@ namespace TShockInterface
         private void Window_Load(object sender, EventArgs e)
         {
             textBox1.ForeColor = System.Drawing.Color.FromArgb(Convert.ToByte(TShock.Config.BroadcastRGB[0]), Convert.ToByte(TShock.Config.BroadcastRGB[1]), Convert.ToByte(TShock.Config.BroadcastRGB[2]));
+
+            Action<string> WriteToTextbox = (s) =>
+                {
+                    if (s.Length > 0)
+                    {
+                        if ((int)s[0] == 84)
+                            richTextBox1.Clear();
+                        else
+                            richTextBox1.Append(s);
+                    }
+                };
+            Console.SetOut(new InterceptingWriter(Console.Out, WriteToTextbox));
         }
     }
 }

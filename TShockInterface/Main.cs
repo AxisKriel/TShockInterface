@@ -11,7 +11,6 @@ namespace TShockInterface
     [ApiVersion(1,16)]
     public class TSInterface : TerrariaPlugin
     {
-        public static bool FormOpen;
         [DllImport("kernel32.dll")]
         static extern IntPtr GetConsoleWindow();
 
@@ -20,7 +19,6 @@ namespace TShockInterface
 
         public  const int SW_HIDE = 0;
         public const int SW_SHOW = 5;
-        public static int ConsoleState = 0;
 
         public override string Author { get { return "Ancientgods"; } }
 
@@ -32,55 +30,26 @@ namespace TShockInterface
 
         public override void Initialize()
         {
-            ServerApi.Hooks.GameInitialize.Register(this, OnInitialize);
-            Commands.ChatCommands.Add(new Command(OpenInterface, "interface"));
+            LaunchInterface();
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                ServerApi.Hooks.GameInitialize.Deregister(this, OnInitialize);
             }
             base.Dispose(disposing);
         }
 
         public TSInterface(Main game) : base(game)
         {
-            Order = 1;
-        }
-
-        public static void ToggleConsoleState()
-        {
-            var handle = GetConsoleWindow();
-            ConsoleState = ConsoleState == 5 ? 0 : 5;
-            ShowWindow(handle, ConsoleState);
+            Order = -1;
         }
 
         public void SetConsoleState(int i)
         {
             var handle = GetConsoleWindow();
             ShowWindow(handle, i);
-        }
-
-        public void OnInitialize(EventArgs e)
-        {
-            LaunchInterface();
-        }
-
-        public void OpenInterface(CommandArgs args)
-        {
-            if (!(args.Player  is TShockAPI.TSServerPlayer))
-            {
-                args.Player.SendErrorMessage("Only the console can do that!");
-                return;
-            }
-            if (FormOpen)
-            {
-                args.Player.SendErrorMessage("Window is already open!");
-                return;
-            }
-            LaunchInterface();
         }
 
         public void LaunchInterface()
@@ -90,10 +59,6 @@ namespace TShockInterface
                 Window w = new Window();
                 try
                 {
-                    FormOpen = true;
-                    ServerApi.Hooks.ServerChat.Register(this, w.OnChat);
-                    ServerApi.Hooks.NetGreetPlayer.Register(this, w.OnGreetPlayer);
-                    ServerApi.Hooks.ServerLeave.Register(this, w.OnLeave);
                     SetConsoleState(SW_HIDE);
                     w.ShowDialog();
                 }
@@ -101,11 +66,7 @@ namespace TShockInterface
                 {
                     Log.ConsoleError("window closed because it crashed: " + ex.ToString());
                 }
-                ServerApi.Hooks.ServerChat.Deregister(this, w.OnChat);
-                ServerApi.Hooks.NetGreetPlayer.Deregister(this, w.OnGreetPlayer);
-                ServerApi.Hooks.ServerLeave.Deregister(this, w.OnLeave);
-                SetConsoleState(SW_SHOW);
-                FormOpen = false;
+                Environment.Exit(0);
             });
             t.SetApartmentState(ApartmentState.STA);
             t.Start();

@@ -42,13 +42,11 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,7 +78,7 @@
             this.confirmToolStripMenuItem,
             this.noSaveToolStripMenuItem});
             this.closeServerToolStripMenuItem.Name = "closeServerToolStripMenuItem";
-            this.closeServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeServerToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.closeServerToolStripMenuItem.Text = "Close Server";
             // 
             // confirmToolStripMenuItem
@@ -88,13 +86,13 @@
             this.confirmToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.confirmToolStripMenuItem1});
             this.confirmToolStripMenuItem.Name = "confirmToolStripMenuItem";
-            this.confirmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.confirmToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.confirmToolStripMenuItem.Text = "Save";
             // 
             // confirmToolStripMenuItem1
             // 
             this.confirmToolStripMenuItem1.Name = "confirmToolStripMenuItem1";
-            this.confirmToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.confirmToolStripMenuItem1.Size = new System.Drawing.Size(118, 22);
             this.confirmToolStripMenuItem1.Text = "Confirm";
             this.confirmToolStripMenuItem1.Click += new System.EventHandler(this.confirmToolStripMenuItem1_Click);
             // 
@@ -103,20 +101,20 @@
             this.noSaveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.confirmToolStripMenuItem2});
             this.noSaveToolStripMenuItem.Name = "noSaveToolStripMenuItem";
-            this.noSaveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.noSaveToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.noSaveToolStripMenuItem.Text = "No Save";
             // 
             // confirmToolStripMenuItem2
             // 
             this.confirmToolStripMenuItem2.Name = "confirmToolStripMenuItem2";
-            this.confirmToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.confirmToolStripMenuItem2.Size = new System.Drawing.Size(118, 22);
             this.confirmToolStripMenuItem2.Text = "Confirm";
             this.confirmToolStripMenuItem2.Click += new System.EventHandler(this.confirmToolStripMenuItem2_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -172,7 +170,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -180,16 +177,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Options";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(8, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(61, 41);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Toggle Console";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tabPage3
             // 
@@ -226,7 +213,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
@@ -245,7 +231,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem confirmToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem noSaveToolStripMenuItem;
